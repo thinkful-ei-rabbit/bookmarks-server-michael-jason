@@ -15,28 +15,28 @@ bookmarkRouter
     if (!title) {
       logger.error('title is required');
       return res
-        .status(400)
+        .status(404)
         .send('title is required');
     }
 
     if (!url) {
       logger.error('url is required');
       return res
-        .status(400)
+        .status(404)
         .send('url is required');
     }
 
     if (!rating) {
       logger.error('rating is required');
       return res
-        .status(400)
+        .status(404)
         .send('rating is required');
     }
 
     if (!desc) {
       logger.error('desc is required');
       return res
-        .status(400)
+        .status(404)
         .send('desc is required');
     }
 
@@ -61,11 +61,11 @@ bookmarkRouter
   .route('/:id')
   .get((req, res)=>{
     const{id}=req.params;
-    const bookmark= bookmarks.find(bookmark => bookmark.id == id);
+    const bookmark= bookmarks.find(bookmark => bookmark.id === id);
     if(!bookmark){
       logger.error(`bookmark with id ${id} not found`);
       return res
-        .status(400)
+        .status(404)
         .send('Book id is not valid');
     }
     res.json(bookmark);
@@ -82,7 +82,9 @@ bookmarkRouter
       
     }
     bookmarks.splice(bookmarkIndex,1);
-    res.status(204).send('deleted');
+    return res
+      .status(204)
+      .send('deleted');
   });
     
   
